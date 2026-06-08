@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test'
 
+test.only
+
 test.describe("SauceDemo", () => {
     test.describe('Login', () => {
         test.beforeEach(async ({ page }) => {
