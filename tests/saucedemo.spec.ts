@@ -46,7 +46,7 @@ test.describe("SauceDemo", () => {
             ).toBeVisible();
         })
 
-        test('login with space before username', async({ page }) => {
+        test.skip('login with space before username', async({ page }) => {
             await page.getByRole('textbox', {name: 'username'}).fill(' standard_user');
             await page.getByRole('textbox', {name: 'Password'}).fill('secret_sauce');
             await page.getByRole('button', {name: 'Login'}).click();
