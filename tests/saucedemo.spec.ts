@@ -77,7 +77,7 @@ test.describe("SauceDemo", () => {
         await page.getByRole('button', {name: 'Add to cart'}).nth(0).click()
         await expect(
             page.locator(".shopping_cart_badge"),
-            "Cart badge should show 1 after adding a product"
+            "Cart badge should show label 1 after adding a product"
         ).toHaveText("1");
     });
     
