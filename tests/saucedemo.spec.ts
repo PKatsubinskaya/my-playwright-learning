@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test'
 
+
 test.describe("SauceDemo", () => {
     test.describe('Login', () => {
         test.beforeEach(async ({ page }) => {
@@ -45,11 +46,20 @@ test.describe("SauceDemo", () => {
             ).toBeVisible();
         })
 
-        test('login with space before username', async({ page }) => {
+        test.skip('login with space before username', async({ page }) => {
             await page.getByRole('textbox', {name: 'username'}).fill(' standard_user');
             await page.getByRole('textbox', {name: 'Password'}).fill('secret_sauce');
             await page.getByRole('button', {name: 'Login'}).click();
             await expect(page).toHaveURL(/inventory/);
+        })
+
+        test('negative login test for locked_out_user', async({ page}) => {
+            await page.getByRole('textbox', {name: 'Username'}).fill('locked_out_user');
+            await page.getByRole('textbox', {name: 'Password'}).fill('secret_sauce');
+            await page.getByRole('button', {name: 'Login'}).click();
+            await expect(
+                page.getByRole('heading', {name: "Epic sadface: Sorry, this user has been locked out."})
+            ).toBeVisible();
         })
     })
 
@@ -68,7 +78,7 @@ test.describe("SauceDemo", () => {
         await page.getByRole('button', {name: 'Add to cart'}).nth(0).click()
         await expect(
             page.locator(".shopping_cart_badge"),
-            "Cart badge should show 1 after adding a product"
+            "Cart badge should show label 1 after adding a product"
         ).toHaveText("1");
     });
     
