@@ -51,6 +51,15 @@ test.describe("SauceDemo", () => {
             await page.getByRole('button', {name: 'Login'}).click();
             await expect(page).toHaveURL(/inventory/);
         })
+
+        test('negative login test for locked_out_user', async({ page}) => {
+            await page.getByRole('textbox', {name: 'Username'}).fill('locked_out_user');
+            await page.getByRole('textbox', {name: 'Password'}).fill('secret_sauce');
+            await page.getByRole('button', {name: 'Login'}).click();
+            await expect(
+                page.getByRole('heading', {name: "Epic sadface: Sorry, this user has been locked out."})
+            ).toBeVisible();
+        })
     })
 
 
