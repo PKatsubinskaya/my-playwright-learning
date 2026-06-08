@@ -72,7 +72,7 @@ test.describe("SauceDemo", () => {
         ).toHaveText("1");
     });
     
-    test('Remove from cart', async ({ page}) => {
+    test('Remove item from cart', async ({ page}) => {
         await page.getByRole('button', {name: 'Add to cart'}).nth(0).click()
         await expect(
             page.locator(".shopping_cart_badge"),
