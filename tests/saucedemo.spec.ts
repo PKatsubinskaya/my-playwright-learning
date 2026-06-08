@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test'
 
-test.only
 
 test.describe("SauceDemo", () => {
     test.describe('Login', () => {
@@ -8,7 +7,7 @@ test.describe("SauceDemo", () => {
             await page.goto("/");
         });
 
-        test('positive login test', async ({ page }) => {
+        test.only('positive login test', async ({ page }) => {
             await page.getByRole('textbox', {name: 'Username'}).fill('standard_user');
             await page.getByRole('textbox', {name: 'Password'}).fill('secret_sauce');
             await page.getByRole('button', {name: 'Login'}).click();
