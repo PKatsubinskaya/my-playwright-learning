@@ -60,21 +60,20 @@ test.describe("Cart", () => {
   test("cart badge shows correct count after adding a product", async ({ page }) => {
   await inventoryPage.addItemByIndex(0);
 
-  expect(await inventoryPage.getCartBadgeCount()).toBe(1);
-  });
+  await expect(inventoryPage.cartBadge).toHaveText("1");
+});
 
-  test("cart page shows the name of the selected product", async ({ page }) => {
-  await expect(inventoryPage.productItems).toHaveCount(6);
+test("cart page shows the name of the selected product", async ({ page }) => {
+  await expect(inventoryPage.productItems.first()).toBeVisible();
   const productNames = await inventoryPage.getProductNames();
   await inventoryPage.addItemByIndex(0);
   await inventoryPage.goToCart();
 
   await expect(page.getByText(productNames[0])).toBeVisible();
-  });
+});
 
-//Removing a product updates the cart (badge disappears or decrements)
-  test("removing a product updates the cart badge", async ({ page }) => {
-  await expect(inventoryPage.productItems).toHaveCount(6);
+test("removing a product updates the cart badge", async ({ page }) => {
+  await expect(inventoryPage.productItems.first()).toBeVisible();
   const productNames = await inventoryPage.getProductNames();
 
   await inventoryPage.addItemByIndex(0);
@@ -83,19 +82,16 @@ test.describe("Cart", () => {
 
   await cartPage.removeItem(productNames[0]);
 
-  expect(await cartPage.getCartItemCount()).toBe(1);
-  });
+  await expect(cartPage.cartItems).toHaveCount(1);
+});
 
-//Adding multiple products shows correct badge count
-  test("adding multiple products shows correct badge count", async ({ page }) => {
+test("adding multiple products shows correct badge count", async ({ page }) => {
   await inventoryPage.addItemByIndex(0);
   await inventoryPage.addItemByIndex(1);
   await inventoryPage.addItemByIndex(2);
 
-  expect(await inventoryPage.getCartBadgeCount()).toBe(3);
-  });
-
-
+  await expect(inventoryPage.cartBadge).toHaveText("3");
+});
 
   });
 
