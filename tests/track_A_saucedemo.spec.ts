@@ -18,26 +18,27 @@ test.describe("Login", () => {
     await expect(page).toHaveURL(/inventory/);
   });
 
-//Locked user cannot log in and sees correct error message
+  //Locked user cannot log in and sees correct error message
   test("locked user sees error message", async ({ page }) => {
     await loginPage.login("locked_out_user", "secret_sauce");
     await expect(page.getByRole('heading', { name: 'Epic sadface: Sorry, this user has been locked out.' })).toBeVisible();
   });
 
-//Wrong password shows error message
+  //Wrong password shows error message
   test("wrong password shows error message", async ({ page }) => {
     await loginPage.login("standard_user", "wrong_password");
     await expect(
     page.getByRole("heading", { name: "Epic sadface: Username and password do not match" })
     ) .toBeVisible();
-});
+  });
 
-//Empty username shows validation error
+  //Empty username shows validation error
   test("empty username shows validation error", async ({ page }) => {
     await loginPage.login("", "secret_sauce");
     await expect(
     page.getByRole("heading", { name: "Epic sadface: Username is required" })
     ).toBeVisible();
+  });
 });
 
 test.describe("Cart", () => {
@@ -55,12 +56,12 @@ test.describe("Cart", () => {
     await inventoryPage.open();
   });
 
-//Cart badge shows correct count after adding a product
+  //Cart badge shows correct count after adding a product
   test("cart badge shows correct count after adding a product", async ({ page }) => {
   await inventoryPage.addItemByIndex(0);
 
   expect(await inventoryPage.getCartBadgeCount()).toBe(1);
-});
+  });
 
   test("cart page shows the name of the selected product", async ({ page }) => {
   await expect(inventoryPage.productItems).toHaveCount(6);
@@ -69,7 +70,7 @@ test.describe("Cart", () => {
   await inventoryPage.goToCart();
 
   await expect(page.getByText(productNames[0])).toBeVisible();
-});
+  });
 
 //Removing a product updates the cart (badge disappears or decrements)
   test("removing a product updates the cart badge", async ({ page }) => {
@@ -83,7 +84,7 @@ test.describe("Cart", () => {
   await cartPage.removeItem(productNames[0]);
 
   expect(await cartPage.getCartItemCount()).toBe(1);
-});
+  });
 
 //Adding multiple products shows correct badge count
   test("adding multiple products shows correct badge count", async ({ page }) => {
@@ -92,11 +93,11 @@ test.describe("Cart", () => {
   await inventoryPage.addItemByIndex(2);
 
   expect(await inventoryPage.getCartBadgeCount()).toBe(3);
-});
+  });
 
 
 
-});
+  });
 
 test.describe("Checkout", () => {
   let loginPage: LoginPage;
@@ -153,5 +154,34 @@ test.describe("Checkout", () => {
 
 });
 
+test.describe("Sorting", () => {
+  let loginPage: LoginPage;
+  let inventoryPage: InventoryPage;
+
+  test.beforeEach(async ({ page }) => {
+    loginPage = new LoginPage(page);
+    inventoryPage = new InventoryPage(page);
+
+    await loginPage.open();
+    await loginPage.login("standard_user", "secret_sauce");
+    await inventoryPage.open();
+  });
+
+  test("user can select price low to high sorting option", async ({ page }) => {
+  await inventoryPage.sortBy("lohi");
+
+  await expect(inventoryPage.sortDropdown).toHaveValue("lohi");
+  });
+
+  test("products are displayed in ascending order by price", async ({ page }) => {
+    await inventoryPage.sortBy("lohi");
+
+    const prices = await inventoryPage.getProductPrices();
+    const sorted = [...prices].sort((a, b) => a - b);
+
+    expect(prices).toEqual(sorted);
+  });
+
 });
+
 
