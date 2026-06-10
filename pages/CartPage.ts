@@ -1,5 +1,6 @@
 import { type Locator, type Page } from "@playwright/test";
 
+
 export class CartPage {
   readonly page: Page;
   readonly cartItems: Locator;
