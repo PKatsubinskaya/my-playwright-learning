@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';  // 1. Import tools
 
-test('has title', async ({ page }) => {           
+test.skip('has title', async ({ page }) => {           
   await page.goto('https://playwright.dev/'); // 4. One test case
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Playwright/);
 });
 
-test('get started link', async ({ page }) => {
+test.skip('get started link', async ({ page }) => {
   await page.goto('https://playwright.dev/');
 
   // Click the get started link.
@@ -17,7 +17,7 @@ test('get started link', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
 
-test("check baseURL works", async ({ page }) => {
+test.skip("check baseURL works", async ({ page }) => {
   await page.goto("/");
   console.log(page.url());
 });

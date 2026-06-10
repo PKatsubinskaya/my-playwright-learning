@@ -143,7 +143,7 @@ test.describe("Checkout", () => {
 });
 
 //Empty first name shows error message
-  test.only("empty first name shows error message", async ({ page }) => {
+  test("empty first name shows error message", async ({ page }) => {
   await checkoutPage.fillInfo("", "Doe", "12345");
   await checkoutPage.clickContinue();
 

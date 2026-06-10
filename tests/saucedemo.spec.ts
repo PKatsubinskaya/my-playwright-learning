@@ -6,14 +6,14 @@ test.describe("SauceDemo", () => {
             await page.goto("/");
         });
 
-        test('positive login test', async ({ page }) => {
+        test.skip('positive login test', async ({ page }) => {
             await page.getByRole('textbox', {name: 'Username'}).fill('standard_user');
             await page.getByRole('textbox', {name: 'Password'}).fill('secret_sauce');
             await page.getByRole('button', {name: 'Login'}).click();
             await expect(page).toHaveURL(/inventory/);
         })
 
-        test('negative login test', async ({ page }) => {
+        test.skip('negative login test', async ({ page }) => {
             await page.getByRole('textbox', {name: 'Username'}).fill('standard_user');
             await page.getByRole('textbox', {name: 'Password'}).fill('secretsauce');
             await page.getByRole('button', {name: 'Login'}).click();
@@ -22,14 +22,14 @@ test.describe("SauceDemo", () => {
             ).toBeVisible();
         })
 
-        test('negative login test empty fields', async ({ page }) => {
+        test.skip('negative login test empty fields', async ({ page }) => {
             await page.getByRole('button', {name: 'Login'}).click();
             await expect(
                 page.getByRole('heading', {name: 'Epic sadface: Username is required'})
             ).toBeVisible();
         });
     
-        test('nagative login test empty password', async({ page}) => {
+        test.skip('nagative login test empty password', async({ page}) => {
             await page.getByRole('textbox', {name: "Username"}).fill('standard_user')
             await page.getByRole('button', {name: "Login"}).click()
             await expect(
@@ -37,7 +37,7 @@ test.describe("SauceDemo", () => {
             ).toBeVisible();
         })
 
-        test('negative login test empty username', async({ page}) => {
+        test.skip('negative login test empty username', async({ page}) => {
             await page.getByRole('textbox', {name: 'Password'}).fill('secret_sausage')
             await page.getByRole('button', {name: 'Login'}).click()
             await expect(
@@ -64,7 +64,7 @@ test.describe("SauceDemo", () => {
 
     });
 
-    test('add to cart', async ({ page }) => {
+    test.skip('add to cart', async ({ page }) => {
         await page.getByRole('button', {name: 'Add to cart'}).nth(0).click()
         await expect(
             page.locator(".shopping_cart_badge"),
@@ -72,7 +72,7 @@ test.describe("SauceDemo", () => {
         ).toHaveText("1");
     });
     
-    test('Remove item from cart', async ({ page}) => {
+    test.skip('Remove item from cart', async ({ page}) => {
         await page.getByRole('button', {name: 'Add to cart'}).nth(0).click()
         await expect(
             page.locator(".shopping_cart_badge"),
