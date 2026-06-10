@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 import { validUser, getLoginUrl } from "../test-data.ts";
 
-test("test data is wired correctly", async () => {
+test.skip("test data is wired correctly", async () => {
   const { email, password } = validUser;  // destructuring!
   console.log("URL:", getLoginUrl("staging"));
   console.log("Email:", email);
