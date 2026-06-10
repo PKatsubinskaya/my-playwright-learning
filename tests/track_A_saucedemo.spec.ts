@@ -97,4 +97,61 @@ test.describe("Cart", () => {
 
 
 });
+
+test.describe("Checkout", () => {
+  let loginPage: LoginPage;
+  let inventoryPage: InventoryPage;
+  let cartPage: CartPage;
+  let checkoutPage: CheckoutPage;
+
+  test.beforeEach(async ({ page }) => {
+    loginPage = new LoginPage(page);
+    inventoryPage = new InventoryPage(page);
+    cartPage = new CartPage(page);
+    checkoutPage = new CheckoutPage(page);
+
+    await loginPage.open();
+    await loginPage.login("standard_user", "secret_sauce");
+    await inventoryPage.open();
+    await inventoryPage.addItemByIndex(0);
+    await inventoryPage.goToCart();
+    await expect(cartPage.checkoutButton).toBeVisible(); 
+    await cartPage.clickCheckout();
+  });
+  
+  test("user can complete the checkout flow", async ({ page }) => {
+  
+  await test.step("fill in checkout information", async () => {
+    await checkoutPage.fillInfo("John", "Doe", "12345");
+    await checkoutPage.clickContinue();
+    await expect(page).toHaveURL("/checkout-step-two.html");
+  });
+
+  await test.step("overview page shows the selected product", async () => {
+    await expect(checkoutPage.orderSummaryItems.first()).toBeVisible();
+  });
+
+  await test.step("finish button completes the order", async () => {
+    await checkoutPage.clickFinish();
+    await expect(page).toHaveURL("/checkout-complete.html");
+  });
+
+  await test.step("success message is visible", async () => {
+    await expect(checkoutPage.confirmationMessage).toHaveText("Thank you for your order!");
+  });
+
 });
+
+//Empty first name shows error message
+  test.only("empty first name shows error message", async ({ page }) => {
+  await checkoutPage.fillInfo("", "Doe", "12345");
+  await checkoutPage.clickContinue();
+
+  await expect(page.getByRole('heading', { name: 'Error: First Name is required' })).toBeVisible();
+
+});
+
+});
+
+});
+

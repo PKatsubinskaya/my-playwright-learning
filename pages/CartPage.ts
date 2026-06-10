@@ -9,9 +9,9 @@ export class CartPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.cartItems              = page.locator(".cart_item");
-    this.checkoutButton         = page.getByTestId("checkout");
-    this.continueShoppingButton = page.getByTestId("continue-shopping");
+    this.cartItems = page.locator(".cart_item");
+    this.checkoutButton = page.getByRole("button", { name: "Checkout" });
+    this.continueShoppingButton = page.getByRole("button", { name: "Continue Shopping" });
   }
 
   async open() {

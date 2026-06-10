@@ -28,18 +28,18 @@ export class CheckoutPage {
     this.firstNameInput = page.getByPlaceholder("First Name");
     this.lastNameInput  = page.getByPlaceholder("Last Name");
     this.zipCodeInput   = page.getByPlaceholder("Zip/Postal Code");
-    this.continueButton = page.getByTestId("continue");
-    this.cancelButton   = page.getByTestId("cancel");
+    this.continueButton = page.getByRole("button", { name: "Continue" });
+    this.cancelButton   = page.getByRole("button", { name: "Cancel" });
     this.errorMessage   = page.getByTestId("error");
 
     // Step 2
-    this.finishButton       = page.getByTestId("finish");
+    this.finishButton       = page.getByRole("button", { name: "Finish" } );
     this.orderSummaryItems  = page.locator(".cart_item");
     this.totalPrice         = page.locator(".summary_total_label");
 
     // Order complete
     this.confirmationMessage = page.locator(".complete-header");
-    this.backHomeButton      = page.getByTestId("back-to-products");
+    this.backHomeButton      = page.getByRole("button", { name: "Back to Products" });
   }
 
   // ─── Navigation ───────────────────────────────────────
